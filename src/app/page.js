@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Typography, Grid } from "@mui/material";
-import LotteryCard from "../components/LotteryCard";
+import LotteryCard from "../Components/LotteryCard/lotteryCard";
+import ClassicLotteryCard from "@/Components/AtomicLotteryCard/atomicLotteryCard";
 
 const Home = () => {
   const fetchLotteryData = async (lotteryType) => {
@@ -36,7 +37,7 @@ const Home = () => {
         )}
         {classicData && (
           <Grid item xs={12}>
-            <LotteryCard data={classicData} title="Classic" />
+            <ClassicLotteryCard data={classicData} title="Classic" />
           </Grid>
         )}
         {atomicData && (

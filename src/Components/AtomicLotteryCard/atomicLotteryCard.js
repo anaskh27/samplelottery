@@ -6,38 +6,39 @@ import {
   ButtonContainer,
   PoolInfoContainer,
   PoolItem,
-  StyledButton,
   StyledTypography,
-} from "./styles";
+} from "../LotteryCard/Styles";
 import { Collapse, Box, Typography, Button, Divider } from "@mui/material";
-import { color } from "@mui/system";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 const getBackgroundColor = (lotteryName) => {
   switch (lotteryName) {
     case "COSMIC":
-      return "#EEE1F0"; // Example color for cosmic
+      return "#EEE1F0";
     case "CLASSIC":
-      return "#E9EEF6"; // Example color for classic
+      return "#E9EEF6";
     case "ATOMIC":
-      return "#EAF9F7"; // Example color for atomic
+      return "#EAF9F7";
     default:
-      return "#ffffff"; // Default color
+      return "#ffffff";
   }
 };
 const getStripeColor = (lotteryName) => {
   switch (lotteryName) {
     case "COSMIC":
-      return "#961A88"; // Example color for cosmic
+      return "#961A88";
     case "CLASSIC":
-      return "#191978"; // Example color for classic
+      return "#191978";
+      c;
     case "ATOMIC":
-      return "#00AEB1"; // Example color for atomic
+      return "#00AEB1";
     default:
-      return "#ffffff"; // Default color
+      return "#ffffff";
   }
 };
 
-const LotteryCard = ({ data, title }) => {
+const ClassicLotteryCard = ({ data, title }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [open, setOpen] = useState(false); // State for collapse
 
@@ -85,56 +86,67 @@ const LotteryCard = ({ data, title }) => {
       variant="outlined"
     >
       <StyledCardContent style={{ backgroundColor: cardBackgroundColor }}>
-        <Typography variant="h5" gutterBottom>
-          {title} No. {data.roundNumber}
-        </Typography>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h6">
-            {data.previousWinningticket &&
-              data.previousWinningticket.map((ticket, index) => (
-                <TicketCircle key={index}>{ticket}</TicketCircle>
-              ))}
+        <Box display={"inline-flex"} gap="5px" alignItems="center">
+          <Typography variant="h5">{title}</Typography>
+          <Typography fontSize={"14px"}>
+            No.
+            {data.roundNumber}
           </Typography>
         </Box>
-        <Typography
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            fontSize: "13px",
-          }}
-        >
-          Winning Pot:{" "}
-          <Typography
-            variant="h6"
-            style={{
-              fontWeight: "bold",
-              marginLeft: "5px",
-              marginRight: "5px",
-            }}
-          >
-            {data.winningPot}
+        {[...Array(3)].map((_, index) => (
+          <Typography key={index} color="black" fontSize="20px">
+            <Box
+              sx={{
+                display: "inline-flex",
+                alignItems: "space-between",
+              }}
+            >
+              {data.roundNumber}. {data.currentPool}. {data.roundNumber}.
+            </Box>
           </Typography>
-          LUCKI
-        </Typography>
+        ))}
 
-        <ButtonContainer sx={{ background: stripeColor, padding: "5px" }}>
-          <Typography color={"white"} variant="h6">
-            Time Left: {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
-            {timeLeft.seconds}s
+        <ButtonContainer
+          sx={{
+            background: stripeColor,
+            padding: "5px",
+            margin: "-20px",
+            padding: "0 15px 0 15px",
+          }}
+          display="flex"
+          alignItems={"center"}
+        >
+          <Typography color={"white"} fontSize="14px">
+            Next<br></br> Draw
           </Typography>
+          <Typography color={"white"} fontSize="20px">
+            <Box sx={{ display: "inline-flex", alignItems: "center" }}>
+              <AccessTimeIcon sx={{ mr: 1 }} />
+              {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
+              {timeLeft.seconds}s
+            </Box>
+          </Typography>
+
           <Button
             variant="outlined"
-            style={{ backgroundColor: "white", color: stripeColor }}
+            style={{
+              backgroundColor: "white",
+              color: stripeColor,
+              padding: "0px",
+              height: "24px",
+            }}
           >
             Play
           </Button>
         </ButtonContainer>
         <Button
           marginTop="20px"
-          variant="outlined"
+          variant="text"
+          sx={{ color: "grey", marginTop: "20px", marginBottom: "-20px" }}
           fullWidth
           onClick={() => setOpen(!open)}
         >
+          <KeyboardArrowDownIcon />
           {open ? "Hide Details" : "Show Details"}
         </Button>
         <PoolInfoContainer>
@@ -160,4 +172,4 @@ const LotteryCard = ({ data, title }) => {
   );
 };
 
-export default LotteryCard;
+export default ClassicLotteryCard;
